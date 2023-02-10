@@ -40,7 +40,7 @@ public class ArticleServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String path = request.getServletPath();
         switch (path) {
-            case "/listArticles":
+            case "/listArticle":
                 request.setAttribute("listArticles", articleFacade.findAll());
                 request.getRequestDispatcher("/listArticles.jsp").forward(request, response);
                 break;
@@ -75,6 +75,12 @@ public class ArticleServlet extends HttpServlet {
                 author.setLastname(lastname);
                 authorFacade.create(author);
                 request.getRequestDispatcher("/WEB-INF/newAuthor.jsp").forward(request, response);
+                break;
+            case "/article":
+                String articleId = request.getParameter("articleId");
+                article = articleFacade.find(Long.parseLong(articleId));
+                request.setAttribute("article", article);
+                request.getRequestDispatcher("/WEB-INF/article.jsp").forward(request, response);
                 break;
             
         }
